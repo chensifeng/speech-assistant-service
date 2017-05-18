@@ -20,7 +20,7 @@ public class AlexaConfig {
         SpeechletServlet speechletServlet = new SpeechletServlet();
         speechletServlet.setSpeechlet(mySpeechlet);
 
-        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(speechletServlet, "/alexa");
+        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(speechletServlet, "/alexa-helloworld");
         return servletRegistrationBean;
     }
 }
