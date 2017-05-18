@@ -45,7 +45,7 @@ public class LatestHeadlinesSpeechlet implements Speechlet {
     }
 
     private SpeechletResponse LatestHeadlinesFromKeyword(final Intent intent) {
-        String speechText = "Latest headlines from " + intent.getSlot("keywordslot");
+        String speechText = "Latest headlines from " + intent.getSlot("keywordslot").getValue();
 
         // Create the Simple card content.
         SimpleCard card = new SimpleCard();
@@ -60,7 +60,7 @@ public class LatestHeadlinesSpeechlet implements Speechlet {
     }
 
     private SpeechletResponse LatestHeadlinesFromCategory(final Intent intent) {
-        String speechText = "Latest headlines from " + intent.getSlot("categoryslot");
+        String speechText = "Latest headlines from " + intent.getSlot("categoryslot").getValue();
 
         // Create the Simple card content.
         SimpleCard card = new SimpleCard();
@@ -110,7 +110,7 @@ public class LatestHeadlinesSpeechlet implements Speechlet {
      * @return SpeechletResponse spoken and visual response for the given intent
      */
     private SpeechletResponse getLatestHeadlines(final Intent intent) {
-        String speechText = "Latest headlines from " + intent.getSlot("newsslot");
+        String speechText = "Latest headlines from " + intent.getSlot("newsslot").getValue();
 
         // Create the Simple card content.
         SimpleCard card = new SimpleCard();

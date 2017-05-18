@@ -34,3 +34,5 @@ nbdist/
 .svn/wc.db-journal
 mvnw
 mvnw.cmd
+*.svn-base
+*.svn-base
