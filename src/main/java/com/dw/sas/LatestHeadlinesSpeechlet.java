@@ -7,13 +7,11 @@ import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 /**
  * Created by hofmannro on 17.05.2017.
  */
 @Service
-public class HelloWorldSpeechlet implements Speechlet {
+public class LatestHeadlinesSpeechlet implements Speechlet {
 
     @Override
     public void onSessionStarted(final SessionStartedRequest request, final Session session)
@@ -33,13 +31,47 @@ public class HelloWorldSpeechlet implements Speechlet {
         Intent intent = request.getIntent();
         String intentName = (intent != null) ? intent.getName() : null;
 
-        if ("HelloWorldIntent".equals(intentName)) {
-            return getHelloResponse();
-        } else if ("AMAZON.HelpIntent".equals(intentName)) {
+        if ("LatestHeadlines".equals(intentName)) {
+            return getLatestHeadlines(intent);
+        } else if ("LatestHeadlinesFromKeyword".equals(intentName)) {
+            return LatestHeadlinesFromKeyword(intent); }
+        else if ("LatestHeadlinesFromCategory".equals(intentName)) {
+            return LatestHeadlinesFromCategory(intent); }
+        else if ("AMAZON.HelpIntent".equals(intentName)) {
             return getHelpResponse();
         } else {
             throw new SpeechletException("Invalid Intent");
         }
+    }
+
+    private SpeechletResponse LatestHeadlinesFromKeyword(final Intent intent) {
+        String speechText = "Latest headlines from " + intent.getSlot("keywordslot");
+
+        // Create the Simple card content.
+        SimpleCard card = new SimpleCard();
+        card.setTitle("LatestHeadlinesFromKeyword");
+        card.setContent(speechText);
+
+        // Create the plain text output.
+        PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+        speech.setText(speechText);
+
+        return SpeechletResponse.newTellResponse(speech, card);
+    }
+
+    private SpeechletResponse LatestHeadlinesFromCategory(final Intent intent) {
+        String speechText = "Latest headlines from " + intent.getSlot("categoryslot");
+
+        // Create the Simple card content.
+        SimpleCard card = new SimpleCard();
+        card.setTitle("LatestHeadlinesFromCategory");
+        card.setContent(speechText);
+
+        // Create the plain text output.
+        PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+        speech.setText(speechText);
+
+        return SpeechletResponse.newTellResponse(speech, card);
     }
 
     @Override
@@ -54,11 +86,11 @@ public class HelloWorldSpeechlet implements Speechlet {
      * @return SpeechletResponse spoken and visual response for the given intent
      */
     private SpeechletResponse getWelcomeResponse() {
-        String speechText = "Welcome to the Alexa Skills Kit, you can say hello";
+        String speechText = "Hi, this is DW. What news topic are you interested in?";
 
         // Create the Simple card content.
         SimpleCard card = new SimpleCard();
-        card.setTitle("HelloWorld");
+        card.setTitle("DW Welcome.");
         card.setContent(speechText);
 
         // Create the plain text output.
@@ -77,12 +109,12 @@ public class HelloWorldSpeechlet implements Speechlet {
      *
      * @return SpeechletResponse spoken and visual response for the given intent
      */
-    private SpeechletResponse getHelloResponse() {
-        String speechText = "Hello world";
+    private SpeechletResponse getLatestHeadlines(final Intent intent) {
+        String speechText = "Latest headlines from " + intent.getSlot("newsslot");
 
         // Create the Simple card content.
         SimpleCard card = new SimpleCard();
-        card.setTitle("HelloWorld");
+        card.setTitle("getLatestHeadlines");
         card.setContent(speechText);
 
         // Create the plain text output.
@@ -98,11 +130,11 @@ public class HelloWorldSpeechlet implements Speechlet {
      * @return SpeechletResponse spoken and visual response for the given intent
      */
     private SpeechletResponse getHelpResponse() {
-        String speechText = "You can say hello to me!";
+        String speechText = "You can ask for the latest headlines!";
 
         // Create the Simple card content.
         SimpleCard card = new SimpleCard();
-        card.setTitle("HelloWorld");
+        card.setTitle("Help");
         card.setContent(speechText);
 
         // Create the plain text output.
