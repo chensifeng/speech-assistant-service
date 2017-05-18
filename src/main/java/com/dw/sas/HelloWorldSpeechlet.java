@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by hofmannro on 17.05.2017.
  */
-@Service
+//@Service
 public class HelloWorldSpeechlet implements Speechlet {
 
     @Override
